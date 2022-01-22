@@ -1,18 +1,25 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction, Slice} from '@reduxjs/toolkit';
+import {ICoinsData} from 'Types/coinsTypes';
 
 interface ICoinsState {
-  // coinsList: IProfileData;
+  coinsList: ICoinsData;
 }
 
-const initialState: ICoinsState = {};
+const initialState: ICoinsState = {
+  coinsList: {
+    EUR: 0,
+    GBP: 0,
+    USD: 0,
+  },
+};
 
-const CoinsSlice = createSlice({
+const CoinsSlice: Slice = createSlice({
   name: 'CoinsSlice',
   initialState,
   reducers: {
-    // setProfileData: (state, action: PayloadAction<IProfileData>) => {
-    //   state.userData = action.payload;
-    // },
+    setCoinsList: (state, action: PayloadAction<ICoinsData>) => {
+      state.coinsList = action.payload;
+    },
   },
 });
 
