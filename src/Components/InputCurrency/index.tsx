@@ -1,45 +1,99 @@
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  Text,
-  TextInputProps,
-} from 'react-native';
-import React from 'react';
+import {View, TextInput, Text, TextInputProps, ViewStyle} from 'react-native';
+import React, {useMemo, useState} from 'react';
 import {InputCurrencyStyles as styles} from './styles.inputCurrency';
 import {ChevronIcon} from 'Assets/Icons';
 import {mvp} from 'Utils';
 import {colors} from 'Theme';
 import {Strings} from 'Localization';
-
+import {Dropdown} from 'react-native-element-dropdown';
+import {useSelector} from 'react-redux';
+import {IState} from 'Data/Store';
 interface IProps extends TextInputProps {
   selectedToken: string;
   title: string;
   balance: string;
+  actionSign?: string;
+  tokenSign?: string;
+  error?: boolean;
+  onChangeToken: (item: string) => void;
+  containerStyle?: ViewStyle;
 }
 
-const InputCurrency = ({selectedToken, title, balance, ...props}: IProps) => {
+const InputCurrency = ({
+  selectedToken,
+  title,
+  balance,
+  actionSign,
+  tokenSign,
+  error,
+  onChangeToken,
+  containerStyle,
+  ...props
+}: IProps) => {
+  const {EXCEEDS_BALANCE} = Strings;
+
+  const symbolsInState = useSelector((state: IState) => state.coins.balance);
+  const dataDropDown = useMemo(
+    () => Object.entries(symbolsInState).map(([k]) => ({label: k, value: k})),
+    [symbolsInState],
+  );
+
+  const renderItem = (item: any) => {
+    return (
+      <View style={styles.dropDownItemContainer}>
+        <Text style={styles.dropDownItemText}>{item.label}</Text>
+      </View>
+    );
+  };
+
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        containerStyle,
+        error && styles.errorContainer,
+      ]}>
       <Text style={styles.title}>{title}</Text>
-      <Text style={styles.balance}>
-        {Strings.BALANCE}
-        {balance}
-      </Text>
+      {!!actionSign?.length && (
+        <Text style={styles.inputSign}>{actionSign}</Text>
+      )}
       <TextInput
         placeholder="0.0"
         style={styles.input}
-        keyboardType="numeric"
+        keyboardType="decimal-pad"
         {...props}
       />
-      <TouchableOpacity style={styles.pickerContainer}>
-        <Text style={styles.selectedItemText}>{selectedToken}</Text>
-        <ChevronIcon
-          width={mvp(16)}
-          height={mvp(16)}
-          fill={colors.regularIcons}
+      {error && <Text style={styles.ExceedsText}>{EXCEEDS_BALANCE}</Text>}
+      <View>
+        <Dropdown
+          placeholderStyle={styles.selectedItemText}
+          selectedTextStyle={styles.selectedItemText}
+          data={dataDropDown}
+          maxHeight={180}
+          labelField="label"
+          valueField="value"
+          placeholder={selectedToken}
+          renderItem={renderItem}
+          onChange={item => {
+            onChangeToken(item.value);
+          }}
+          renderRightIcon={() => (
+            <ChevronIcon
+              width={mvp(16)}
+              height={mvp(16)}
+              fill={colors.regularIcons}
+            />
+          )}
         />
-      </TouchableOpacity>
+        <Text style={styles.balance}>
+          {Strings.BALANCE}
+          <Text
+            style={[styles.balanceCounts, error && styles.errorTextBalance]}>
+            {tokenSign}
+            {balance === '0' ? '0' : parseFloat(Number(balance).toFixed(2))}
+          </Text>
+        </Text>
+      </View>
     </View>
   );
 };

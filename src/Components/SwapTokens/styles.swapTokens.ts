@@ -5,7 +5,7 @@ import {mvp} from 'Utils';
 export const swapTokensStyles = StyleSheet.create({
   container: {
     backgroundColor: colors.background,
-    width: mvp(90),
+    width: mvp(85),
     alignSelf: 'center',
     height: mvp(45),
     alignItems: 'center',

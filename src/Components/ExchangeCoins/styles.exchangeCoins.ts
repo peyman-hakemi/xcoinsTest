@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {colors, metrics} from 'Theme';
+import {mvp} from 'Utils';
 
 export const exchangeCoinsStyles = StyleSheet.create({
   centerContainer: {
@@ -7,5 +8,11 @@ export const exchangeCoinsStyles = StyleSheet.create({
     backgroundColor: colors.exchangeBackground,
     paddingHorizontal: metrics.padding_medium,
     paddingVertical: metrics.padding_extra,
+  },
+  submitContainer: {
+    marginTop: metrics.padding_medium,
+  },
+  space: {
+    marginBottom: metrics.padding_medium,
   },
 });
