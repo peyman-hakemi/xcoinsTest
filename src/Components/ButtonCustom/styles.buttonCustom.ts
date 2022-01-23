@@ -18,5 +18,6 @@ export const buttonStyles = StyleSheet.create({
   },
   disable: {
     backgroundColor: colors.buttonBackgroundDisable,
+    elevation: 0,
   },
 });
