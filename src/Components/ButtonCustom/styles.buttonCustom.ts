@@ -16,6 +16,11 @@ export const buttonStyles = StyleSheet.create({
     ...Fonts.extraSemiBold,
     color: colors.darkText,
   },
+  loadingText: {
+    ...Fonts.compactRegular,
+    color: colors.darkText,
+    marginTop: mvp(5),
+  },
   disable: {
     backgroundColor: colors.buttonBackgroundDisable,
     elevation: 0,

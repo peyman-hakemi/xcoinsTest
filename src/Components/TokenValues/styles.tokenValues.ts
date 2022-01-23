@@ -15,5 +15,6 @@ export const tokenValueStyles = StyleSheet.create({
   },
   texts: {
     ...Fonts.smallRegular,
+    color: colors.regularText,
   },
 });

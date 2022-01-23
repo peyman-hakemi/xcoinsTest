@@ -3,6 +3,7 @@ import {
   ViewStyle,
   TouchableOpacity,
   ActivityIndicator,
+  View,
 } from 'react-native';
 import React from 'react';
 import {buttonStyles as styles} from './styles.buttonCustom';
@@ -30,7 +31,12 @@ const ButtonCustom = ({
       disabled={loading || disable}
       style={[styles.container, containerStyle, disable && styles.disable]}>
       {loading ? (
-        <ActivityIndicator color={colors.darkText} />
+        <View>
+          <ActivityIndicator color={colors.darkText} />
+          <Text style={styles.loadingText}>
+            fetching token prices, please wait...
+          </Text>
+        </View>
       ) : (
         <Text style={styles.label}>{label}</Text>
       )}

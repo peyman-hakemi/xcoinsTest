@@ -61,6 +61,7 @@ const InputCurrency = ({
         placeholder="0.0"
         style={styles.input}
         keyboardType="decimal-pad"
+        placeholderTextColor={colors.subText}
         {...props}
       />
       {error && <Text style={styles.ExceedsText}>{EXCEEDS_BALANCE}</Text>}
