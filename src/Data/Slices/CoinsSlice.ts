@@ -1,8 +1,9 @@
 import {createSlice, PayloadAction, Slice} from '@reduxjs/toolkit';
-import {ICoinsData} from 'Types/coinsTypes';
+import {IBalanceData, ICoinsData} from 'Types/coinsTypes';
 
 interface ICoinsState {
   coinsList: ICoinsData;
+  balance: IBalanceData;
 }
 
 const initialState: ICoinsState = {
@@ -10,6 +11,11 @@ const initialState: ICoinsState = {
     EUR: 0,
     GBP: 0,
     USD: 0,
+  },
+  balance: {
+    USD: 200,
+    EUR: 150,
+    GBP: 10,
   },
 };
 
@@ -19,6 +25,9 @@ const CoinsSlice: Slice = createSlice({
   reducers: {
     setCoinsList: (state, action: PayloadAction<ICoinsData>) => {
       state.coinsList = action.payload;
+    },
+    setBalances: (state, action: PayloadAction<ICoinsData>) => {
+      state.balance = action.payload;
     },
   },
 });
